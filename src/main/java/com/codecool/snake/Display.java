@@ -1,14 +1,15 @@
 package com.codecool.snake;
 
 import com.codecool.snake.entities.GameEntity;
-import java.util.List;
-
 import javafx.scene.layout.Pane;
+
+import java.util.List;
 
 
 public class Display {
     private Pane displayPane;
     private DelayedModificationList<GameEntity> gameObjects = new DelayedModificationList<>();
+
 
     public Display(Pane pane) {
         displayPane = pane;

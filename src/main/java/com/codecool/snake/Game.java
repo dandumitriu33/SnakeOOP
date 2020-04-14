@@ -1,13 +1,18 @@
 package com.codecool.snake;
 
+import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.eventhandler.InputHandler;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+
+import java.util.List;
 
 
 public class Game extends Pane {
@@ -28,19 +33,47 @@ public class Game extends Pane {
         spawnSnake();
         spawnEnemies(4);
         spawnPowerUps(4);
+        spawnRestartButton();
+
 
         GameLoop gameLoop = new GameLoop(snake, snakePlayer2);
-//        GameLoop gameLoopPlayer2 = new GameLoop(snakePlayer2);  // TBD
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
-//        Globals.getInstance().setGameLoop(gameLoopPlayer2);
-//        gameTimer.setup(gameLoopPlayer2::step);
         gameTimer.play();
     }
 
+    private void spawnRestartButton() {
+        Button restart = new Button("Restart");
+        restart.setLayoutX(920);
+        restart.setLayoutY(10);
+        this.getChildren().add(restart);
+
+        restart.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("pressed restart");
+                snake = null;
+                snakePlayer2 = null;
+
+                List<GameEntity> gameObjs = Globals.getInstance().display.getObjectList();
+                for (GameEntity item : gameObjs) {
+                    item.destroy();
+                }
+
+                init();
+                start();
+
+            }
+        });
+    }
+
+
     public void start() {
+        this.requestFocus();
         setupInputHandling();
         Globals.getInstance().startGame();
+
+
     }
 
     private void spawnSnake() {
@@ -62,11 +95,5 @@ public class Game extends Pane {
         scene.setOnKeyReleased(event -> InputHandler.getInstance().setKeyReleased(event.getCode()));
     }
 
-    public static void snakeDelete(Snake targetSnake) {
-        System.out.println("this snake is " + targetSnake.getId());
-        System.out.println("killing " + targetSnake);
-//        if (targetSnake.getId() == 1) snake=null;
-//        else if (targetSnake.getId() == 2) snakePlayer2=null;
-        targetSnake = null;
-    }
+
 }

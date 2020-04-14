@@ -1,7 +1,6 @@
 package com.codecool.snake.entities.snakes;
 
 import com.codecool.snake.DelayedModificationList;
-import com.codecool.snake.Game;
 import com.codecool.snake.Globals;
 import com.codecool.snake.entities.Animatable;
 import com.codecool.snake.entities.GameEntity;
@@ -87,7 +86,7 @@ public class Snake implements Animatable {
             for(int i=0; i<body.getList().size(); i++) {
                 body.getList().get(i).destroy();
             }
-            Game.snakeDelete(this);
+//            Game.snakeDelete(this);
             counter--;
         }
         System.out.println(this.id + " head not touching wall");
@@ -115,4 +114,6 @@ public class Snake implements Animatable {
     public boolean isAlreadyDeleted() {
         return alreadyDeleted;
     }
+
+
 }
