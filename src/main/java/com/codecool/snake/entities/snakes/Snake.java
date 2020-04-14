@@ -1,24 +1,28 @@
 package com.codecool.snake.entities.snakes;
 
 import com.codecool.snake.DelayedModificationList;
+import com.codecool.snake.Game;
 import com.codecool.snake.Globals;
 import com.codecool.snake.entities.Animatable;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.eventhandler.InputHandler;
-
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 
 
 public class Snake implements Animatable {
+    private static int counter = 0;
+    private int id;
     private static final float speed = 2;
     private int health = 100;
+    private boolean alreadyDeleted = false;
 
     private SnakeHead head;
     private DelayedModificationList<GameEntity> body;
 
 
     public Snake(Point2D position) {
+        id = ++counter;
         head = new SnakeHead(this, position);
         body = new DelayedModificationList<>();
 
@@ -30,6 +34,7 @@ public class Snake implements Animatable {
         head.updateRotation(turnDir, speed);
 
         updateSnakeBodyHistory();
+        checkSnakeDeathCondition();
         checkForGameOverConditions();
 
         body.doPendingModifications();
@@ -37,8 +42,14 @@ public class Snake implements Animatable {
 
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
-        if(InputHandler.getInstance().isKeyPressed(KeyCode.LEFT)) turnDir = SnakeControl.TURN_LEFT;
-        if(InputHandler.getInstance().isKeyPressed(KeyCode.RIGHT)) turnDir = SnakeControl.TURN_RIGHT;
+        if (id==1) {
+            if (InputHandler.getInstance().isKeyPressed(KeyCode.LEFT)) turnDir = SnakeControl.TURN_LEFT;
+            if (InputHandler.getInstance().isKeyPressed(KeyCode.RIGHT)) turnDir = SnakeControl.TURN_RIGHT;
+        }
+        else {
+            if (InputHandler.getInstance().isKeyPressed(KeyCode.A)) turnDir = SnakeControl.TURN_LEFT;
+            if (InputHandler.getInstance().isKeyPressed(KeyCode.D)) turnDir = SnakeControl.TURN_RIGHT;
+        }
         return turnDir;
     }
 
@@ -58,10 +69,28 @@ public class Snake implements Animatable {
     }
 
     private void checkForGameOverConditions() {
-        if (head.isOutOfBounds() || health <= 0) {
-            System.out.println("Game Over");
+        if (counter==0) {
+            System.out.println("counter 0 game over");
             Globals.getInstance().stopGame();
         }
+    }
+
+    /*
+    Function checks if any of the snakes is marked for deletion and if it is true it deletes its body and head.
+     */
+    private void checkSnakeDeathCondition() {
+        System.out.println("checking " + this.id + " head on wall");
+        if ((head.isOutOfBounds() || health <= 0) && !this.alreadyDeleted) {
+            System.out.println("Snake died." + " counter is " + counter);
+            this.head.destroy();
+            this.alreadyDeleted = true;
+            for(int i=0; i<body.getList().size(); i++) {
+                body.getList().get(i).destroy();
+            }
+            Game.snakeDelete(this);
+            counter--;
+        }
+        System.out.println(this.id + " head not touching wall");
     }
 
     private void updateSnakeBodyHistory() {
@@ -77,5 +106,13 @@ public class Snake implements Animatable {
 
         if(result != null) return result;
         return head;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public boolean isAlreadyDeleted() {
+        return alreadyDeleted;
     }
 }
