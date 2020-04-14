@@ -40,7 +40,7 @@ public class Snake implements Animatable {
         body.doPendingModifications();
     }
 
-    private SnakeControl getUserInput() {   // TBD
+    private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
         if (id==1) {
             if (InputHandler.getInstance().isKeyPressed(KeyCode.LEFT)) turnDir = SnakeControl.TURN_LEFT;
@@ -73,14 +73,11 @@ public class Snake implements Animatable {
             System.out.println("counter 0 game over");
             Globals.getInstance().stopGame();
         }
-//        if (counter == 1) {
-//            if (head.isOutOfBounds() || health <= 0) {
-//                System.out.println("Game Over");
-//                Globals.getInstance().stopGame();
-//            }
-//        }
     }
 
+    /*
+    Function checks if any of the snakes is marked for deletion and if it is true it deletes its body and head.
+     */
     private void checkSnakeDeathCondition() {
         System.out.println("checking " + this.id + " head on wall");
         if ((head.isOutOfBounds() || health <= 0) && !this.alreadyDeleted) {
@@ -90,7 +87,7 @@ public class Snake implements Animatable {
             for(int i=0; i<body.getList().size(); i++) {
                 body.getList().get(i).destroy();
             }
-            Game.snakeDelete(this); // TODO delete snake object, not just head and body
+            Game.snakeDelete(this);
             counter--;
         }
         System.out.println(this.id + " head not touching wall");
@@ -113,5 +110,9 @@ public class Snake implements Animatable {
 
     public int getId() {
         return this.id;
+    }
+
+    public boolean isAlreadyDeleted() {
+        return alreadyDeleted;
     }
 }

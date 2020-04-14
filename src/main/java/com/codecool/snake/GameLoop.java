@@ -27,8 +27,18 @@ public class GameLoop {
 
     public void step() {
         if(running) {
-            snake.step();
-            snakePlayer2.step();
+            if(snake != null) {
+                snake.step();
+                if(snake.isAlreadyDeleted()) {
+                    snake = null;
+                }
+            }
+            if(snakePlayer2 != null) {
+                snakePlayer2.step();
+                if(snakePlayer2.isAlreadyDeleted()) {
+                    snakePlayer2 = null;
+                }
+            }
             for (GameEntity gameObject : Globals.getInstance().display.getObjectList()) {
                 if (gameObject instanceof Animatable) {
                     ((Animatable) gameObject).step();
