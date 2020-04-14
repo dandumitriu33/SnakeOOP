@@ -47,10 +47,24 @@ public class SnakeHead extends GameEntity implements Interactable {
             System.out.println(getMessage());
             snake.addPart(4);
         }
+
+//        if(entity instanceof SnakeBody) {
+//            System.out.println("touched snake body");
+////            for(int i=0; i<entity.getList().size(); i++) {
+////                entity.getList().get(i).destroy();
+////            }
+//        }
+//        if (entity instanceof SnakeHead) {
+//            System.out.println("touched head");
+//        }
     }
 
     @Override
     public String getMessage() {
         return "IMMA SNAEK HED! SPITTIN' MAH WENOM! SPITJU-SPITJU!";
+    }
+
+    public int getSnakeId() {
+        return this.snake.getId();
     }
 }

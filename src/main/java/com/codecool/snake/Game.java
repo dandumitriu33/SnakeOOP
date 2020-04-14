@@ -62,11 +62,4 @@ public class Game extends Pane {
         scene.setOnKeyReleased(event -> InputHandler.getInstance().setKeyReleased(event.getCode()));
     }
 
-    public static void snakeDelete(Snake targetSnake) {
-        System.out.println("this snake is " + targetSnake.getId());
-        System.out.println("killing " + targetSnake);
-//        if (targetSnake.getId() == 1) snake=null;
-//        else if (targetSnake.getId() == 2) snakePlayer2=null;
-        targetSnake = null;
-    }
 }

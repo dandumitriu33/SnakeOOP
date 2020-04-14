@@ -9,6 +9,8 @@ import com.codecool.snake.eventhandler.InputHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 
+import java.util.List;
+
 
 public class Snake implements Animatable {
     private static int counter = 0;
@@ -42,11 +44,10 @@ public class Snake implements Animatable {
 
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
-        if (id==1) {
+        if (id == 1) {
             if (InputHandler.getInstance().isKeyPressed(KeyCode.LEFT)) turnDir = SnakeControl.TURN_LEFT;
             if (InputHandler.getInstance().isKeyPressed(KeyCode.RIGHT)) turnDir = SnakeControl.TURN_RIGHT;
-        }
-        else {
+        } else {
             if (InputHandler.getInstance().isKeyPressed(KeyCode.A)) turnDir = SnakeControl.TURN_LEFT;
             if (InputHandler.getInstance().isKeyPressed(KeyCode.D)) turnDir = SnakeControl.TURN_RIGHT;
         }
@@ -69,8 +70,7 @@ public class Snake implements Animatable {
     }
 
     private void checkForGameOverConditions() {
-        if (counter==0) {
-            System.out.println("counter 0 game over");
+        if (counter == 0) {
             Globals.getInstance().stopGame();
         }
     }
@@ -79,23 +79,20 @@ public class Snake implements Animatable {
     Function checks if any of the snakes is marked for deletion and if it is true it deletes its body and head.
      */
     private void checkSnakeDeathCondition() {
-        System.out.println("checking " + this.id + " head on wall");
+
         if ((head.isOutOfBounds() || health <= 0) && !this.alreadyDeleted) {
-            System.out.println("Snake died." + " counter is " + counter);
             this.head.destroy();
             this.alreadyDeleted = true;
-            for(int i=0; i<body.getList().size(); i++) {
+            for (int i = 0; i < body.getList().size(); i++) {
                 body.getList().get(i).destroy();
             }
-            Game.snakeDelete(this);
             counter--;
         }
-        System.out.println(this.id + " head not touching wall");
     }
 
     private void updateSnakeBodyHistory() {
         GameEntity prev = head;
-        for(GameEntity currentPart : body.getList()) {
+        for (GameEntity currentPart : body.getList()) {
             currentPart.setPosition(prev.getPosition());
             prev = currentPart;
         }
@@ -104,7 +101,7 @@ public class Snake implements Animatable {
     private GameEntity getLastPart() {
         GameEntity result = body.getLast();
 
-        if(result != null) return result;
+        if (result != null) return result;
         return head;
     }
 
@@ -115,4 +112,9 @@ public class Snake implements Animatable {
     public boolean isAlreadyDeleted() {
         return alreadyDeleted;
     }
+
+    public List<GameEntity> getBody() {
+        return body.getList();
+    }
+
 }
