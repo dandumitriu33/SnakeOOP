@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 
 public class Game extends Pane {
     private Snake snake = null;
+    private Snake snakePlayer2 = null;
     private GameTimer gameTimer = new GameTimer();
 
 
@@ -28,9 +29,12 @@ public class Game extends Pane {
         spawnEnemies(4);
         spawnPowerUps(4);
 
-        GameLoop gameLoop = new GameLoop(snake);
+        GameLoop gameLoop = new GameLoop(snake, snakePlayer2);
+//        GameLoop gameLoopPlayer2 = new GameLoop(snakePlayer2);  // TBD
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
+//        Globals.getInstance().setGameLoop(gameLoopPlayer2);
+//        gameTimer.setup(gameLoopPlayer2::step);
         gameTimer.play();
     }
 
@@ -41,6 +45,7 @@ public class Game extends Pane {
 
     private void spawnSnake() {
         snake = new Snake(new Point2D(500, 500));
+        snakePlayer2 = new Snake(new Point2D(200, 200));
     }
 
     private void spawnEnemies(int numberOfEnemies) {
@@ -55,5 +60,13 @@ public class Game extends Pane {
         Scene scene = getScene();
         scene.setOnKeyPressed(event -> InputHandler.getInstance().setKeyPressed(event.getCode()));
         scene.setOnKeyReleased(event -> InputHandler.getInstance().setKeyReleased(event.getCode()));
+    }
+
+    public static void snakeDelete(Snake targetSnake) {
+        System.out.println("this snake is " + targetSnake.getId());
+        System.out.println("killing " + targetSnake);
+//        if (targetSnake.getId() == 1) snake=null;
+//        else if (targetSnake.getId() == 2) snakePlayer2=null;
+        targetSnake = null;
     }
 }
