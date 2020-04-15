@@ -2,8 +2,11 @@ package com.codecool.snake;
 
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
+import com.codecool.snake.entities.powerups.HealthPowerUp;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
+import com.codecool.snake.entities.powerups.SpeedPowerUp;
 import com.codecool.snake.entities.snakes.Snake;
+import com.codecool.snake.entities.snakes.SnakeBody;
 import com.codecool.snake.eventhandler.InputHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -139,7 +142,11 @@ public class Game extends Pane {
     }
 
     private void spawnPowerUps(int numberOfPowerUps) {
-        for(int i = 0; i < numberOfPowerUps; ++i) new SimplePowerUp();
+        for(int i = 0; i < numberOfPowerUps; ++i) {
+            new SimplePowerUp();
+            new HealthPowerUp();
+            new SpeedPowerUp();
+        }
     }
 
     private void setupInputHandling() {
@@ -147,6 +154,5 @@ public class Game extends Pane {
         scene.setOnKeyPressed(event -> InputHandler.getInstance().setKeyPressed(event.getCode()));
         scene.setOnKeyReleased(event -> InputHandler.getInstance().setKeyReleased(event.getCode()));
     }
-
 
 }
