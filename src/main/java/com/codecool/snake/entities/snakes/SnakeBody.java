@@ -14,12 +14,11 @@ import java.util.Queue;
 
 public class SnakeBody extends GameEntity implements Interactable {
     private Queue<Point2D> history = new LinkedList<>();
-    private int snakeId = 0;
-    private static int counter = 0;
+    private Snake snake;
     private static final int historySize = 10;
 
-    public SnakeBody(Point2D coord, int snakeId) {
-        this.snakeId = snakeId;
+    public SnakeBody(Point2D coord, Snake snake) {
+        this.snake = snake;
         setImage(Globals.getInstance().getImage("SnakeBody"));
         setX(coord.getX());
         setY(coord.getY());
@@ -51,15 +50,7 @@ public class SnakeBody extends GameEntity implements Interactable {
         return null;
     }
 
-    public static void setCounter(int counter) {
-        SnakeBody.counter = counter;
-    }
-
-    public static int getCounter() {
-        return counter;
-    }
-
-    public int getSnakeId() {
-        return snakeId;
+    public Snake getSnake() {
+        return snake;
     }
 }

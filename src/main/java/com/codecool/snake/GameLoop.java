@@ -36,7 +36,7 @@ public class GameLoop {
     }
 
     public void step() {
-        if (Snake.getGameOver()) {
+        if (snake.isDead() && snakePlayer2.isDead()) {
             this.myGame.displayGameOver();  ////////////////////////////////////////////////////////////
         }
 
@@ -58,7 +58,7 @@ public class GameLoop {
                 SimpleEnemyCircle.rotateSimpleEnemyCircle();
                 for (GameEntity gameObject : Globals.getInstance().display.getObjectList()) {
                     if (gameObject instanceof SimpleEnemyFollow) {
-                        if (snake != null && snakePlayer2 != null) {
+                        if (!snake.isDead() && !snakePlayer2.isDead()) {
                             Point2D pointSnake1 = snake.getHead().getPosition();
                             Point2D pointSnake2 = snakePlayer2.getHead().getPosition();
                             Point2D gameObjectCoords = gameObject.getPosition();
@@ -72,26 +72,20 @@ public class GameLoop {
                             }
 
                         }
-                        else if(snakePlayer2 == null) {
+                        else if(!snakePlayer2.isDead()) {
                             SimpleEnemyFollow.followSnake(snake, ((SimpleEnemyFollow) gameObject));
                         }
-                        else if(snake == null) {
+                        else if(!snake.isDead()) {
                             SimpleEnemyFollow.followSnake(snakePlayer2, ((SimpleEnemyFollow) gameObject));
                         }
                     }
                 }
             }
-            if (snake != null) {
+            if (!snake.isDead()) {
                 snake.step();
-                if (snake.isAlreadyDeleted()) {
-                    snake = null;
-                }
             }
-            if (snakePlayer2 != null) {
+            if (!snakePlayer2.isDead()) {
                 snakePlayer2.step();
-                if (snakePlayer2.isAlreadyDeleted()) {
-                    snakePlayer2 = null;
-                }
             }
             for (GameEntity gameObject : Globals.getInstance().display.getObjectList()) {
                 if (gameObject instanceof Animatable) {

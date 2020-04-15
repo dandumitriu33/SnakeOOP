@@ -12,20 +12,18 @@ import java.util.List;
 
 
 public class Snake implements Animatable {
-    private static int counter = 0;
-    public static boolean gameOver = false;
-    private int id;
+    private final String name;
     private float speed = 2;
     private int health = 100;
-    private boolean alreadyDeleted = false;
+    private boolean isDead = false;
 
     private SnakeHead head;
+    private final ControlSet controlSet;
     private DelayedModificationList<GameEntity> body;
 
-
-
-    public Snake(Point2D position) {
-        id = ++counter;
+    public Snake(Point2D position, ControlSet controlSet, String name) {
+        this.controlSet = controlSet;
+        this.name = name;
         head = new SnakeHead(this, position);
         body = new DelayedModificationList<>();
 
@@ -38,19 +36,18 @@ public class Snake implements Animatable {
 
         updateSnakeBodyHistory();
         checkSnakeDeathCondition();
-        checkForGameOverConditions();
 
         body.doPendingModifications();
     }
 
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
-        if (id == 1) {
+        if (this.controlSet == ControlSet.PLAYER_1) {
             if (InputHandler.getInstance().isKeyPressed(KeyCode.LEFT)) turnDir = SnakeControl.TURN_LEFT;
             if (InputHandler.getInstance().isKeyPressed(KeyCode.RIGHT)) turnDir = SnakeControl.TURN_RIGHT;
             if (InputHandler.getInstance().isKeyPressed(KeyCode.UP)) turnDir = SnakeControl.SHOOT;
 
-        } else {
+        }  if(this.controlSet == ControlSet.PLAYER_2) {
             if (InputHandler.getInstance().isKeyPressed(KeyCode.A)) turnDir = SnakeControl.TURN_LEFT;
             if (InputHandler.getInstance().isKeyPressed(KeyCode.D)) turnDir = SnakeControl.TURN_RIGHT;
             if (InputHandler.getInstance().isKeyPressed(KeyCode.W)) turnDir = SnakeControl.SHOOT;
@@ -63,7 +60,7 @@ public class Snake implements Animatable {
         Point2D position = parent.getPosition();
 
         for (int i = 0; i < numParts; i++) {
-            SnakeBody newBodyPart = new SnakeBody(position, this.getId());
+            SnakeBody newBodyPart = new SnakeBody(position, this);
             body.add(newBodyPart);
         }
         Globals.getInstance().display.updateSnakeHeadDrawPosition(head);
@@ -76,33 +73,17 @@ public class Snake implements Animatable {
         health = tempHealth;
     }
 
-    private void checkForGameOverConditions() {
-        if (counter == 0) {
-            Globals.getInstance().stopGame();
-            gameOver = true;
-        }
-    }
-
-    public static boolean getGameOver() {
-        return gameOver;
-    }
-
-    public static void setGameOver(boolean status) {
-        gameOver = status;
-    }
-
     /*
     Function checks if any of the snakes is marked for deletion and if it is true it deletes its body and head.
      */
     private void checkSnakeDeathCondition() {
 
-        if ((head.isOutOfBounds() || health <= 0) && !this.alreadyDeleted || this.head.isDecapitate()) {
+        if ((head.isOutOfBounds() || health <= 0) && !this.isDead || this.head.isDecapitate()) {
             this.head.destroy();
-            this.alreadyDeleted = true;
+            this.isDead = true;
             for (int i = 0; i < body.getList().size(); i++) {
                 body.getList().get(i).destroy();
             }
-            counter--;
         }
     }
 
@@ -121,24 +102,12 @@ public class Snake implements Animatable {
         return head;
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public boolean isAlreadyDeleted() {
-        return alreadyDeleted;
+    public boolean isDead() {
+        return isDead;
     }
 
     public List<GameEntity> getBody() {
         return body.getList();
-    }
-
-    public static void setCounter(int counter) {
-        Snake.counter = counter;
-    }
-
-    public void setAlreadyDeleted(boolean alreadyDeleted) {
-        this.alreadyDeleted = alreadyDeleted;
     }
 
     public int getHealth() {
@@ -155,5 +124,13 @@ public class Snake implements Animatable {
 
     public SnakeHead getHead() {
         return head;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public enum ControlSet {
+        PLAYER_1, PLAYER_2
     }
 }

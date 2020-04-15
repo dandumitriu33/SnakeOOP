@@ -107,14 +107,12 @@ public class Game extends Pane {
         System.out.println("pressed restart");
         snake = null;
         snakePlayer2 = null;
-        Snake.setCounter(0);
         List<GameEntity> gameObjs = Globals.getInstance().display.getObjectList();
         for (GameEntity item : gameObjs) {
             item.destroy();
         }
         init();
         start();
-        Snake.setGameOver(false);
         showingGameOver =false;
     }
 
@@ -127,7 +125,7 @@ public class Game extends Pane {
     }
 
     public void displayGameOver() {
-        if (Snake.getGameOver()) {
+        if (snake.isDead() && snakePlayer2.isDead()) {
             Stage screenGameOver = new Stage();
             screenGameOver.initModality(Modality.WINDOW_MODAL);
             Label snakeScore = new Label("Player 1 score: " + snake.getBody().size());
@@ -170,8 +168,8 @@ public class Game extends Pane {
     }
 
     private void spawnSnake() {
-        snake = new Snake(new Point2D(500, 500));
-        snakePlayer2 = new Snake(new Point2D(200, 200));
+        snake = new Snake(new Point2D(500, 500), Snake.ControlSet.PLAYER_1, "Player 1");
+        snakePlayer2 = new Snake(new Point2D(200, 200), Snake.ControlSet.PLAYER_2, "Player 2");
     }
 
     private void spawnEnemies(int numberOfEnemies) {
