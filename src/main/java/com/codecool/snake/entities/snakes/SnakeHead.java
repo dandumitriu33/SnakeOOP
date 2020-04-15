@@ -13,6 +13,7 @@ import javafx.geometry.Point2D;
 public class SnakeHead extends GameEntity implements Interactable {
     private static final float turnRate = 2;
     private Snake snake;
+    private boolean decapitate = false;
 
     public SnakeHead(Snake snake, Point2D position) {
         this.snake = snake;
@@ -30,6 +31,7 @@ public class SnakeHead extends GameEntity implements Interactable {
             headRotation = headRotation + turnRate;
         }
 
+
         // set rotation and position
         setRotate(headRotation);
         Point2D heading = Utils.directionToVector(headRotation, speed);
@@ -39,18 +41,44 @@ public class SnakeHead extends GameEntity implements Interactable {
 
     @Override
     public void apply(GameEntity entity) {
+
         if(entity instanceof Enemy){
             System.out.println(getMessage());
             snake.changeHealth(((Enemy) entity).getDamage());
         }
-        if(entity instanceof SimplePowerUp){
+        else if(entity instanceof SimplePowerUp){
             System.out.println(getMessage());
             snake.addPart(4);
         }
+
+
+        else if (entity instanceof SnakeHead) {
+            System.out.println("touched head");
+            this.decapitate = true;
+        }
+        else if (entity instanceof SnakeBody ){
+            if(((SnakeBody)entity).getSnakeId() != this.snake.getId()){
+                System.out.println("touched snake body " + ((SnakeBody)entity).getSnakeId());
+                this.decapitate = true;
+            }
+        }
+
     }
 
     @Override
     public String getMessage() {
         return "IMMA SNAEK HED! SPITTIN' MAH WENOM! SPITJU-SPITJU!";
+    }
+
+    public int getSnakeId() {
+        return this.snake.getId();
+    }
+
+    public void setDecapitate(boolean decapitate) {
+        this.decapitate = decapitate;
+    }
+
+    public boolean isDecapitate() {
+        return decapitate;
     }
 }

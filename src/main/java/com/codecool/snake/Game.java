@@ -4,6 +4,7 @@ import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.snakes.Snake;
+import com.codecool.snake.entities.snakes.SnakeBody;
 import com.codecool.snake.eventhandler.InputHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -54,7 +55,8 @@ public class Game extends Pane {
                 System.out.println("pressed restart");
                 snake = null;
                 snakePlayer2 = null;
-
+                Snake.setCounter(0);
+                SnakeBody.setCounter(0);
                 List<GameEntity> gameObjs = Globals.getInstance().display.getObjectList();
                 for (GameEntity item : gameObjs) {
                     item.destroy();
@@ -94,6 +96,5 @@ public class Game extends Pane {
         scene.setOnKeyPressed(event -> InputHandler.getInstance().setKeyPressed(event.getCode()));
         scene.setOnKeyReleased(event -> InputHandler.getInstance().setKeyReleased(event.getCode()));
     }
-
 
 }
