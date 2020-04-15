@@ -7,6 +7,9 @@ import com.codecool.snake.entities.enemies.Enemy;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.enemies.SimpleEnemyCircle;
 import com.codecool.snake.entities.enemies.SimpleEnemyFollow;
+import com.codecool.snake.entities.powerups.HealthPowerUp;
+import com.codecool.snake.entities.powerups.SimplePowerUp;
+import com.codecool.snake.entities.powerups.SpeedPowerUp;
 import com.codecool.snake.entities.snakes.Snake;
 import javafx.geometry.Point2D;
 
@@ -36,13 +39,22 @@ public class GameLoop {
         if (Snake.getGameOver()) {
             this.myGame.displayGameOver();  ////////////////////////////////////////////////////////////
         }
+
         if (running) {
+            if(Game.powerupCounter <=0 ){
+                new HealthPowerUp();
+                new SimplePowerUp();
+                new SpeedPowerUp();
+                Game.powerupCounter += 3;
+            }
             if (Enemy.getEnemyCounter() <= 0) {
                 new SimpleEnemy();
                 new SimpleEnemyCircle();
                 new SimpleEnemyFollow();
 
             }
+
+
 
             if (Enemy.getEnemyCounter() > 0) {
                 //System.out.println("Enemy Circle movement");
