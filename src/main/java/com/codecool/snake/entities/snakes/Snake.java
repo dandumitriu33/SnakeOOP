@@ -8,6 +8,8 @@ import com.codecool.snake.eventhandler.InputHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 
+import java.util.List;
+
 
 public class Snake implements Animatable {
     private static int counter = 0;
@@ -125,5 +127,8 @@ public class Snake implements Animatable {
         return alreadyDeleted;
     }
 
+    public List<GameEntity> getBody() {
+        return body.getList();
+    }
 
 }

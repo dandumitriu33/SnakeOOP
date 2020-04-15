@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -84,9 +85,15 @@ public class Game extends Pane {
 
             Stage screenGameOver = new Stage();
 
+            Label snakeScore = new Label("Player 1 score: " + snake.getBody().size());
+            snakeScore.setLayoutX(70);
+            snakeScore.setLayoutY(70);
+            Label snakePlayer2Score = new Label("Player 2 score: " + snakePlayer2.getBody().size());
+            snakePlayer2Score.setLayoutX(70);
+            snakePlayer2Score.setLayoutY(90);
             Button restart = new Button("Restart");
-            restart.setLayoutX(10);
-            restart.setLayoutY(10);
+            restart.setLayoutX(70);
+            restart.setLayoutY(120);
             restart.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -96,8 +103,8 @@ public class Game extends Pane {
             });
 
             Button exitGame = new Button("Exit Game");
-            restart.setLayoutX(100);
-            restart.setLayoutY(100);
+            exitGame.setLayoutX(70);
+            exitGame.setLayoutY(150);
             exitGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -107,7 +114,7 @@ public class Game extends Pane {
 
 
             Pane layout = new Pane();
-            layout.getChildren().addAll(restart, exitGame);
+            layout.getChildren().addAll(snakeScore, snakePlayer2Score, restart, exitGame);
 
             Scene sceneGameOver = new Scene(layout, 300, 300);
             // make boolean - if is visible don't show again
