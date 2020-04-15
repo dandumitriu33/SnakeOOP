@@ -1,7 +1,6 @@
 package com.codecool.snake.entities.snakes;
 
 import com.codecool.snake.DelayedModificationList;
-import com.codecool.snake.Game;
 import com.codecool.snake.Globals;
 import com.codecool.snake.entities.Animatable;
 import com.codecool.snake.entities.GameEntity;
@@ -116,5 +115,6 @@ public class Snake implements Animatable {
     public List<GameEntity> getBody() {
         return body.getList();
     }
+
 
 }
