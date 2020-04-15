@@ -145,4 +145,8 @@ public class Snake implements Animatable {
     public void setSpeed(float diff) {
         speed += diff;
     }
+
+    public SnakeHead getHead() {
+        return head;
+    }
 }

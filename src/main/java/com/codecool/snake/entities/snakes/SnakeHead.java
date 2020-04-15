@@ -16,6 +16,7 @@ public class SnakeHead extends GameEntity implements Interactable {
     private static final float turnRate = 2;
     private Snake snake;
     private boolean decapitate = false;
+    private Point2D heading;
 
     public SnakeHead(Snake snake, Point2D position) {
         this.snake = snake;
@@ -36,7 +37,7 @@ public class SnakeHead extends GameEntity implements Interactable {
 
         // set rotation and position
         setRotate(headRotation);
-        Point2D heading = Utils.directionToVector(headRotation, speed);
+        this.heading = Utils.directionToVector(headRotation, speed);
         setX(getX() + heading.getX());
         setY(getY() + heading.getY());
     }
@@ -91,4 +92,9 @@ public class SnakeHead extends GameEntity implements Interactable {
     public boolean isDecapitate() {
         return decapitate;
     }
+
+    public Point2D getHeading() {
+        return heading;
+    }
+
 }
