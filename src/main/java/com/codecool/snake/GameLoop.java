@@ -41,6 +41,7 @@ public class GameLoop {
         }
 
         if (running) {
+            Game.refreshHealth(myGame);  // updates player health bars every turn/frame
             if(Game.powerupCounter <=0 ){
                 new HealthPowerUp();
                 new SimplePowerUp();
@@ -51,11 +52,7 @@ public class GameLoop {
                 new SimpleEnemy();
                 new SimpleEnemyCircle();
                 new SimpleEnemyFollow();
-
             }
-
-
-
             if (Enemy.getEnemyCounter() > 0) {
                 //System.out.println("Enemy Circle movement");
                 SimpleEnemyCircle.rotateSimpleEnemyCircle();
