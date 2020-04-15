@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 
 public class Snake implements Animatable {
     private static int counter = 0;
+    public static boolean gameOver = false;
     private int id;
     private static final float speed = 2;
     private int health = 100;
@@ -71,7 +72,16 @@ public class Snake implements Animatable {
         if (counter==0) {
             System.out.println("counter 0 game over");
             Globals.getInstance().stopGame();
+            gameOver = true;
         }
+    }
+
+    public static boolean getGameOver() {
+        return gameOver;
+    }
+
+    public static void setGameOver(boolean status) {
+        gameOver = status;
     }
 
     /*
