@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -88,7 +89,7 @@ public class Game extends Pane {
         if (Snake.getGameOver()) {
 
             Stage screenGameOver = new Stage();
-
+            screenGameOver.initModality(Modality.WINDOW_MODAL);
             Label snakeScore = new Label("Player 1 score: " + snake.getBody().size());
             snakeScore.setLayoutX(70);
             snakeScore.setLayoutY(70);

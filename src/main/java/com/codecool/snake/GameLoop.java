@@ -6,7 +6,9 @@ import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.enemies.Enemy;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.enemies.SimpleEnemyCircle;
+import com.codecool.snake.entities.enemies.SimpleEnemyFollow;
 import com.codecool.snake.entities.snakes.Snake;
+import javafx.geometry.Point2D;
 
 import java.util.List;
 
@@ -34,25 +36,51 @@ public class GameLoop {
         if (Snake.getGameOver()) {
             this.myGame.displayGameOver();  ////////////////////////////////////////////////////////////
         }
-        if(running) {
-            if(Enemy.getEnemyCounter() <= 0) {
-               new SimpleEnemy();
-               new SimpleEnemyCircle();
+        if (running) {
+            if (Enemy.getEnemyCounter() <= 0) {
+                new SimpleEnemy();
+                new SimpleEnemyCircle();
+                new SimpleEnemyFollow();
+
             }
 
-            if (Enemy.getEnemyCounter() >0) {
-                System.out.println("Enemy Circle movement");
+            if (Enemy.getEnemyCounter() > 0) {
+                //System.out.println("Enemy Circle movement");
                 SimpleEnemyCircle.rotateSimpleEnemyCircle();
+                for (GameEntity gameObject : Globals.getInstance().display.getObjectList()) {
+                    if (gameObject instanceof SimpleEnemyFollow) {
+                        if (snake != null && snakePlayer2 != null) {
+                            Point2D pointSnake1 = snake.getHead().getPosition();
+                            Point2D pointSnake2 = snakePlayer2.getHead().getPosition();
+                            Point2D gameObjectCoords = gameObject.getPosition();
+                            double distanceToHead1 = calculateDistance(pointSnake1.getX(), pointSnake1.getY(), gameObjectCoords.getX(), gameObjectCoords.getY());
+                            double distanceToHead2 = calculateDistance(pointSnake2.getX(), pointSnake2.getY(), gameObjectCoords.getX(), gameObjectCoords.getY());
+                            if (distanceToHead1 <= distanceToHead2) {
+                                SimpleEnemyFollow.followSnake(snake, ((SimpleEnemyFollow) gameObject));
+                            } else {
+
+                                SimpleEnemyFollow.followSnake(snakePlayer2, ((SimpleEnemyFollow) gameObject));
+                            }
+
+                        }
+                        else if(snakePlayer2 == null) {
+                            SimpleEnemyFollow.followSnake(snake, ((SimpleEnemyFollow) gameObject));
+                        }
+                        else if(snake == null) {
+                            SimpleEnemyFollow.followSnake(snakePlayer2, ((SimpleEnemyFollow) gameObject));
+                        }
+                    }
+                }
             }
-            if(snake != null) {
+            if (snake != null) {
                 snake.step();
-                if(snake.isAlreadyDeleted()) {
+                if (snake.isAlreadyDeleted()) {
                     snake = null;
                 }
             }
-            if(snakePlayer2 != null) {
+            if (snakePlayer2 != null) {
                 snakePlayer2.step();
-                if(snakePlayer2.isAlreadyDeleted()) {
+                if (snakePlayer2.isAlreadyDeleted()) {
                     snakePlayer2 = null;
                 }
             }
@@ -73,8 +101,8 @@ public class GameLoop {
             if (objToCheck instanceof Interactable) {
                 for (int otherObjIdx = idxToCheck + 1; otherObjIdx < gameObjs.size(); ++otherObjIdx) {
                     GameEntity otherObj = gameObjs.get(otherObjIdx);
-                    if (otherObj instanceof Interactable){
-                        if(objToCheck.getBoundsInParent().intersects(otherObj.getBoundsInParent())){
+                    if (otherObj instanceof Interactable) {
+                        if (objToCheck.getBoundsInParent().intersects(otherObj.getBoundsInParent())) {
                             ((Interactable) objToCheck).apply(otherObj);
                             ((Interactable) otherObj).apply(objToCheck);
                         }
@@ -86,5 +114,9 @@ public class GameLoop {
 
     public boolean isRunning() {
         return running;
+    }
+
+    private double calculateDistance(double xA, double yA, double xB, double yB) {
+        return Math.sqrt((xA - xB) * (xA - xB) + (yA - yB) * (yA - yB));
     }
 }
