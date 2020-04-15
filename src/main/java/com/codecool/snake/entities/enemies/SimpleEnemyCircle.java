@@ -51,7 +51,7 @@ public class SimpleEnemyCircle extends Enemy implements Animatable, Interactable
         if(entity instanceof SnakeHead){
             System.out.println(getMessage());
             destroy();
-            Enemy.modifyEnemyCounter(-1);
+
         }
     }
 
