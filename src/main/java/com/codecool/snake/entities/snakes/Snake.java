@@ -116,5 +116,7 @@ public class Snake implements Animatable {
         return body.getList();
     }
 
-
+    public static void setCounter(int counter) {
+        Snake.counter = counter;
+    }
 }

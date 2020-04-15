@@ -54,7 +54,7 @@ public class Game extends Pane {
                 System.out.println("pressed restart");
                 snake = null;
                 snakePlayer2 = null;
-
+                Snake.setCounter(0);
                 List<GameEntity> gameObjs = Globals.getInstance().display.getObjectList();
                 for (GameEntity item : gameObjs) {
                     item.destroy();
