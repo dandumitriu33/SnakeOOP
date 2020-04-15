@@ -58,7 +58,7 @@ public class Snake implements Animatable {
         Point2D position = parent.getPosition();
 
         for (int i = 0; i < numParts; i++) {
-            SnakeBody newBodyPart = new SnakeBody(position);
+            SnakeBody newBodyPart = new SnakeBody(position, this.getId());
             body.add(newBodyPart);
         }
         Globals.getInstance().display.updateSnakeHeadDrawPosition(head);
@@ -79,7 +79,7 @@ public class Snake implements Animatable {
      */
     private void checkSnakeDeathCondition() {
 
-        if ((head.isOutOfBounds() || health <= 0) && !this.alreadyDeleted) {
+        if ((head.isOutOfBounds() || health <= 0) && !this.alreadyDeleted || this.head.isDecapitate()) {
             this.head.destroy();
             this.alreadyDeleted = true;
             for (int i = 0; i < body.getList().size(); i++) {
@@ -118,5 +118,9 @@ public class Snake implements Animatable {
 
     public static void setCounter(int counter) {
         Snake.counter = counter;
+    }
+
+    public void setAlreadyDeleted(boolean alreadyDeleted) {
+        this.alreadyDeleted = alreadyDeleted;
     }
 }

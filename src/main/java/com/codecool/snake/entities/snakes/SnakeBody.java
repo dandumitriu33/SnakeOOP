@@ -14,9 +14,12 @@ import java.util.Queue;
 
 public class SnakeBody extends GameEntity implements Interactable {
     private Queue<Point2D> history = new LinkedList<>();
+    private int snakeId = 0;
+    private static int counter = 0;
     private static final int historySize = 10;
 
-    public SnakeBody(Point2D coord) {
+    public SnakeBody(Point2D coord, int snakeId) {
+        this.snakeId = snakeId;
         setImage(Globals.getInstance().getImage("SnakeBody"));
         setX(coord.getX());
         setY(coord.getY());
@@ -34,30 +37,29 @@ public class SnakeBody extends GameEntity implements Interactable {
         history.add(pos); // add the parent's current position to the beginning of the history
     }
 
+    public Queue<Point2D> getHistory() {
+        return history;
+    }
+
     @Override
     public void apply(GameEntity entity) {
-//        if(entity instanceof Enemy){
-//            System.out.println(getMessage());
-//            //snake.changeHealth(((Enemy) entity).getDamage());
-//        }
-//        if(entity instanceof SimplePowerUp){
-//            System.out.println(getMessage());
-//            //snake.addPart(4);
-//        }
 
-        if(entity instanceof SnakeBody) {
-            System.out.println("touched snake body");
-//            for(int i=0; i<entity.getList().size(); i++) {
-//                entity.getList().get(i).destroy();
-//            }
-        }
-//        if (entity instanceof SnakeHead) {
-//            System.out.println("touched head");
-//        }
     }
 
     @Override
     public String getMessage() {
         return null;
+    }
+
+    public static void setCounter(int counter) {
+        SnakeBody.counter = counter;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public int getSnakeId() {
+        return snakeId;
     }
 }
