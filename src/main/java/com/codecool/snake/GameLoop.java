@@ -3,6 +3,9 @@ package com.codecool.snake;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.Animatable;
 import com.codecool.snake.entities.Interactable;
+import com.codecool.snake.entities.enemies.Enemy;
+import com.codecool.snake.entities.enemies.SimpleEnemy;
+import com.codecool.snake.entities.enemies.SimpleEnemyCircle;
 import com.codecool.snake.entities.snakes.Snake;
 
 import java.util.List;
@@ -32,6 +35,15 @@ public class GameLoop {
             this.myGame.displayGameOver();  ////////////////////////////////////////////////////////////
         }
         if(running) {
+            if(Enemy.getEnemyCounter() <= 0) {
+               new SimpleEnemy();
+               new SimpleEnemyCircle();
+            }
+
+            if (Enemy.getEnemyCounter() >0) {
+                System.out.println("Enemy Circle movement");
+                SimpleEnemyCircle.rotateSimpleEnemyCircle();
+            }
             if(snake != null) {
                 snake.step();
                 if(snake.isAlreadyDeleted()) {

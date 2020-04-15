@@ -71,6 +71,7 @@ public class Game extends Pane {
         }
         init();
         start();
+        //Snake.setCounter(0);
         Snake.setGameOver(false);
         showingGameOver =false;
     }
