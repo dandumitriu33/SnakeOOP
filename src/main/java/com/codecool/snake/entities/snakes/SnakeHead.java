@@ -61,20 +61,20 @@ public class SnakeHead extends GameEntity implements Interactable {
         else if(entity instanceof HealthPowerUp) {
             snake.changeHealth(20);
             //Game.powerupCounter -= 1;
-            System.out.println("snake " + snake.getId()+" " + snake.getHealth());
+            System.out.println("snake " + snake.getName()+" " + snake.getHealth());
         }
         else if(entity instanceof SpeedPowerUp) {
             snake.setSpeed(0f); // change from 1f
             //Game.powerupCounter -= 1;
-            System.out.println("snake " + snake.getId()+" " + snake.getSpeed());
+            System.out.println("snake " + snake.getName()+" " + snake.getSpeed());
         }
         else if (entity instanceof SnakeHead) {
             System.out.println("touched head");
             this.decapitate = true;
         }
         else if (entity instanceof SnakeBody ){
-            if(((SnakeBody)entity).getSnakeId() != this.snake.getId()){
-                System.out.println("touched snake body " + ((SnakeBody)entity).getSnakeId());
+            if(((SnakeBody)entity).getSnake() != this.snake){
+                System.out.println("touched snake body " + ((SnakeBody)entity).getSnake().getName());
                 this.decapitate = true;
             }
         }
@@ -84,10 +84,6 @@ public class SnakeHead extends GameEntity implements Interactable {
     @Override
     public String getMessage() {
         return "IMMA SNAEK HED! SPITTIN' MAH WENOM! SPITJU-SPITJU!";
-    }
-
-    public int getSnakeId() {
-        return this.snake.getId();
     }
 
     public void setDecapitate(boolean decapitate) {
