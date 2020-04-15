@@ -7,6 +7,7 @@ import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.entities.snakes.SnakeHead;
+import com.codecool.snake.entities.snakes.SnakeLaser;
 import javafx.geometry.Point2D;
 
 import java.util.Random;
@@ -50,6 +51,11 @@ public class SimpleEnemyFollow extends Enemy implements Animatable, Interactable
     public void apply(GameEntity entity) {
         if(entity instanceof SnakeHead){
             System.out.println(getMessage());
+            destroy();
+            Enemy.modifyEnemyCounter(-1);
+        }
+        else if(entity instanceof SnakeLaser){
+            System.out.println(this + " killed by laser.");
             destroy();
             Enemy.modifyEnemyCounter(-1);
         }
