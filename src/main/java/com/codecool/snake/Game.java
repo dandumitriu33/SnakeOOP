@@ -2,7 +2,9 @@ package com.codecool.snake;
 
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
+import com.codecool.snake.entities.powerups.HealthPowerUp;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
+import com.codecool.snake.entities.powerups.SpeedPowerUp;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.entities.snakes.SnakeBody;
 import com.codecool.snake.eventhandler.InputHandler;
@@ -56,7 +58,6 @@ public class Game extends Pane {
                 snake = null;
                 snakePlayer2 = null;
                 Snake.setCounter(0);
-                SnakeBody.setCounter(0);
                 List<GameEntity> gameObjs = Globals.getInstance().display.getObjectList();
                 for (GameEntity item : gameObjs) {
                     item.destroy();
@@ -88,7 +89,11 @@ public class Game extends Pane {
     }
 
     private void spawnPowerUps(int numberOfPowerUps) {
-        for(int i = 0; i < numberOfPowerUps; ++i) new SimplePowerUp();
+        for(int i = 0; i < numberOfPowerUps; ++i) {
+            new SimplePowerUp();
+            new HealthPowerUp();
+            new SpeedPowerUp();
+        }
     }
 
     private void setupInputHandling() {

@@ -66,4 +66,8 @@ public class GameLoop {
             }
         }
     }
+
+    public boolean isRunning() {
+        return running;
+    }
 }

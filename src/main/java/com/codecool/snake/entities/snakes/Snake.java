@@ -14,7 +14,7 @@ import java.util.List;
 public class Snake implements Animatable {
     private static int counter = 0;
     private int id;
-    private static final float speed = 2;
+    private float speed = 2;
     private int health = 100;
     private boolean alreadyDeleted = false;
 
@@ -122,5 +122,17 @@ public class Snake implements Animatable {
 
     public void setAlreadyDeleted(boolean alreadyDeleted) {
         this.alreadyDeleted = alreadyDeleted;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float diff) {
+        speed += diff;
     }
 }
