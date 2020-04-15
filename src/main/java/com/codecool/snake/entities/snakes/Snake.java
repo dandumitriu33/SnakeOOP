@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Snake implements Animatable {
     private static int counter = 0;
+    public static boolean gameOver = false;
     private int id;
     private float speed = 2;
     private int health = 100;
@@ -71,7 +72,16 @@ public class Snake implements Animatable {
     private void checkForGameOverConditions() {
         if (counter == 0) {
             Globals.getInstance().stopGame();
+            gameOver = true;
         }
+    }
+
+    public static boolean getGameOver() {
+        return gameOver;
+    }
+
+    public static void setGameOver(boolean status) {
+        gameOver = status;
     }
 
     /*

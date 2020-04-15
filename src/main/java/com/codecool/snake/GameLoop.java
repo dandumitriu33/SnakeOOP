@@ -11,11 +11,13 @@ public class GameLoop {
     private Snake snake;
     private Snake snakePlayer2;
     private boolean running = false;
+    private Game myGame;  /////////////////////////////////////////////////////
 
-    public GameLoop(Snake snake, Snake snakePlayer2) {
+    public GameLoop(Game game, Snake snake, Snake snakePlayer2) {
         this.snake = snake;
         this.snakePlayer2 = snakePlayer2;
-    }  // TBD
+        this.myGame = game; ///////////////////////////////////////////////////
+    }
 
     public void start() {
         running = true;
@@ -26,6 +28,9 @@ public class GameLoop {
     }
 
     public void step() {
+        if (Snake.getGameOver()) {
+            this.myGame.displayGameOver();  ////////////////////////////////////////////////////////////
+        }
         if(running) {
             if(snake != null) {
                 snake.step();
