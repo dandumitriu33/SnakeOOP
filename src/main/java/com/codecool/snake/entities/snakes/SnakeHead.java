@@ -1,14 +1,12 @@
 package com.codecool.snake.entities.snakes;
 
-import com.codecool.snake.Game;
-import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.Globals;
 import com.codecool.snake.Utils;
+import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.enemies.Enemy;
 import com.codecool.snake.entities.powerups.HealthPowerUp;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
-
 import com.codecool.snake.entities.powerups.SpeedPowerUp;
 import javafx.geometry.Point2D;
 
@@ -34,6 +32,9 @@ public class SnakeHead extends GameEntity implements Interactable {
         if (turnDirection.equals(SnakeControl.TURN_RIGHT)) {
             headRotation = headRotation + turnRate;
         }
+        if (turnDirection.equals(SnakeControl.SHOOT)) {
+            new SnakeLaser(snake);
+        }
 
 
         // set rotation and position
@@ -48,7 +49,7 @@ public class SnakeHead extends GameEntity implements Interactable {
 
         if(entity instanceof Enemy){
             System.out.println(getMessage());
-            snake.changeHealth(((Enemy) entity).getDamage());
+            snake.changeHealth(-((Enemy) entity).getDamage());
             Enemy.modifyEnemyCounter(-1);
         }
         else if(entity instanceof SimplePowerUp){

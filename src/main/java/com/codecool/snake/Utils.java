@@ -10,7 +10,13 @@ public class Utils {
     */
     public static Point2D directionToVector(double directionInDegrees, double length) {
         double directionInRadians = directionInDegrees / 180 * Math.PI;
-        Point2D heading = new Point2D(length * Math.sin(directionInRadians), - length * Math.cos(directionInRadians));
+        Point2D heading = new Point2D(length * Math.sin(directionInRadians), -length * Math.cos(directionInRadians));
         return heading;
     }
+
+
+    public static double calculateDistance(double xA, double yA, double xB, double yB) {
+        return Math.sqrt((xA - xB) * (xA - xB) + (yA - yB) * (yA - yB));
+    }
+
 }

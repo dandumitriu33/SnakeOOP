@@ -23,6 +23,7 @@ public class Snake implements Animatable {
     private DelayedModificationList<GameEntity> body;
 
 
+
     public Snake(Point2D position) {
         id = ++counter;
         head = new SnakeHead(this, position);
@@ -47,9 +48,12 @@ public class Snake implements Animatable {
         if (id == 1) {
             if (InputHandler.getInstance().isKeyPressed(KeyCode.LEFT)) turnDir = SnakeControl.TURN_LEFT;
             if (InputHandler.getInstance().isKeyPressed(KeyCode.RIGHT)) turnDir = SnakeControl.TURN_RIGHT;
+            if (InputHandler.getInstance().isKeyPressed(KeyCode.UP)) turnDir = SnakeControl.SHOOT;
+
         } else {
             if (InputHandler.getInstance().isKeyPressed(KeyCode.A)) turnDir = SnakeControl.TURN_LEFT;
             if (InputHandler.getInstance().isKeyPressed(KeyCode.D)) turnDir = SnakeControl.TURN_RIGHT;
+            if (InputHandler.getInstance().isKeyPressed(KeyCode.W)) turnDir = SnakeControl.SHOOT;
         }
         return turnDir;
     }
@@ -66,7 +70,10 @@ public class Snake implements Animatable {
     }
 
     public void changeHealth(int diff) {
-        health += diff;
+        int tempHealth = health;
+        tempHealth += diff;
+        if (tempHealth > 100) tempHealth = 100;
+        health = tempHealth;
     }
 
     private void checkForGameOverConditions() {

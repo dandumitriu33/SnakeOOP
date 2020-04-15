@@ -6,7 +6,6 @@ import com.codecool.snake.entities.powerups.HealthPowerUp;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.powerups.SpeedPowerUp;
 import com.codecool.snake.entities.snakes.Snake;
-import com.codecool.snake.entities.snakes.SnakeBody;
 import com.codecool.snake.eventhandler.InputHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -16,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,6 +37,45 @@ public class Game extends Pane {
         Globals.getInstance().setupResources();
 
         init();
+    }
+
+    public static void refreshHealth(Game game) {
+        calculatePlayer1Health(game);
+        calculatePlayer2Health(game);
+    }
+
+    private static void calculatePlayer1Health(Game game) {
+        int healthPoints1 = game.snake.getHealth();
+        if (healthPoints1 > 100) healthPoints1 = 100;
+        Rectangle player1BG = new Rectangle();
+        player1BG.setX(800);
+        player1BG.setY(10);
+        player1BG.setWidth(104);
+        player1BG.setHeight(24);
+        Rectangle player1HP = new Rectangle();
+        player1HP.setX(802);
+        player1HP.setY(12);
+        player1HP.setWidth(healthPoints1);
+        player1HP.setHeight(20);
+        player1HP.setFill(Color.RED);
+        game.getChildren().addAll(player1BG, player1HP);
+    }
+
+    public static void calculatePlayer2Health(Game game) {
+        int healthPoints2 = game.snakePlayer2.getHealth();
+        if (healthPoints2 > 100) healthPoints2 = 100;
+        Rectangle player2BG = new Rectangle();
+        player2BG.setX(30);
+        player2BG.setY(10);
+        player2BG.setWidth(104);
+        player2BG.setHeight(24);
+        Rectangle player2HP = new Rectangle();
+        player2HP.setX(32);
+        player2HP.setY(12);
+        player2HP.setWidth(healthPoints2);
+        player2HP.setHeight(20);
+        player2HP.setFill(Color.RED);
+        game.getChildren().addAll(player2BG, player2HP);
     }
 
     public void init() {
@@ -74,7 +114,6 @@ public class Game extends Pane {
         }
         init();
         start();
-
         Snake.setGameOver(false);
         showingGameOver =false;
     }
@@ -89,7 +128,6 @@ public class Game extends Pane {
 
     public void displayGameOver() {
         if (Snake.getGameOver()) {
-
             Stage screenGameOver = new Stage();
             screenGameOver.initModality(Modality.WINDOW_MODAL);
             Label snakeScore = new Label("Player 1 score: " + snake.getBody().size());
@@ -108,7 +146,6 @@ public class Game extends Pane {
                     restartGame();
                 }
             });
-
             Button exitGame = new Button("Exit Game");
             exitGame.setLayoutX(70);
             exitGame.setLayoutY(150);
@@ -118,16 +155,12 @@ public class Game extends Pane {
                     Platform.exit();
                 }
             });
-
-
             Pane layout = new Pane();
             layout.getChildren().addAll(snakeScore, snakePlayer2Score, restart, exitGame);
-
             Scene sceneGameOver = new Scene(layout, 300, 300);
             // make boolean - if is visible don't show again
             screenGameOver.setScene(sceneGameOver);
             if (showingGameOver) {
-
             }
             else {
                 screenGameOver.show();
