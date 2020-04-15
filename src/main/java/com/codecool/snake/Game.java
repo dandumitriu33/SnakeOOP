@@ -27,6 +27,7 @@ public class Game extends Pane {
     private Snake snakePlayer2 = null;
     private GameTimer gameTimer = new GameTimer();
     private boolean showingGameOver = false;
+    public static int powerupCounter;
 
 
     public Game() {
@@ -148,6 +149,7 @@ public class Game extends Pane {
             new SimplePowerUp();
             new HealthPowerUp();
             new SpeedPowerUp();
+            powerupCounter += 3;
         }
     }
 

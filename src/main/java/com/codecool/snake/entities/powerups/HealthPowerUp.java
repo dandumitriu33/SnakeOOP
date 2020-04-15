@@ -1,5 +1,6 @@
 package com.codecool.snake.entities.powerups;
 
+import com.codecool.snake.Game;
 import com.codecool.snake.Globals;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.Interactable;
@@ -21,6 +22,7 @@ public class HealthPowerUp extends GameEntity implements Interactable {
     public void apply(GameEntity entity) {
         if(entity instanceof SnakeHead){
             System.out.println(getMessage());
+            Game.powerupCounter -= 1;
             destroy();
         }
     }
