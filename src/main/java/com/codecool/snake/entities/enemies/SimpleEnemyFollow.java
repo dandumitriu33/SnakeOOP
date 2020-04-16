@@ -157,7 +157,6 @@ public class SimpleEnemyFollow extends Enemy implements Animatable, Interactable
         if(entity instanceof SnakeHead){
             System.out.println(getMessage());
             destroy();
-            Enemy.modifyEnemyCounter(-1);
         }
         else if(entity instanceof SnakeLaser){
             System.out.println(this + " killed by laser.");

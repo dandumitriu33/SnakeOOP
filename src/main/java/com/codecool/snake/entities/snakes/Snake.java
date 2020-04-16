@@ -98,6 +98,7 @@ public class Snake implements Animatable {
 
         if ((head.isOutOfBounds() || health <= 0) && !this.alreadyDeleted || this.head.isDecapitate()) {
             this.head.destroy();
+            this.health = 0;
             this.alreadyDeleted = true;
             for (int i = 0; i < body.getList().size(); i++) {
                 body.getList().get(i).destroy();

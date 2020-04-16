@@ -55,7 +55,7 @@ public class SnakeHead extends GameEntity implements Interactable {
         else if(entity instanceof SimplePowerUp){
             System.out.println(getMessage());
             //Game.powerupCounter -= 1;
-            snake.addPart(1); // change from 4
+            snake.addPart(4); // change from 4
         }
 
         else if(entity instanceof HealthPowerUp) {
@@ -64,7 +64,7 @@ public class SnakeHead extends GameEntity implements Interactable {
             System.out.println("snake " + snake.getId()+" " + snake.getHealth());
         }
         else if(entity instanceof SpeedPowerUp) {
-            snake.setSpeed(0f); // change from 1f
+            snake.setSpeed(.5f); // change from 1f
             //Game.powerupCounter -= 1;
             System.out.println("snake " + snake.getId()+" " + snake.getSpeed());
         }
