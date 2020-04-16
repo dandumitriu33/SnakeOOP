@@ -13,20 +13,21 @@ import java.util.Random;
 
 
 
-public class SimpleEnemy extends Enemy implements Animatable, Interactable {
-    private Point2D heading;
+public class SimpleEnemyCircle extends Enemy implements Animatable, Interactable {
+
+    private static Point2D heading;
     private static Random rnd = new Random();
+    private static double direction;
 
-
-    public SimpleEnemy() {
+    public SimpleEnemyCircle() {
         super(10);
 
         Enemy.modifyEnemyCounter(1);
-        setImage(Globals.getInstance().getImage("SimpleEnemy"));
+        setImage(Globals.getInstance().getImage("SimpleEnemyCircle"));
         setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
         setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
 
-        double direction = rnd.nextDouble() * 360;
+        direction = rnd.nextDouble() * 360;
         setRotate(direction);
 
         int speed = 1;
@@ -39,8 +40,11 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
             Enemy.modifyEnemyCounter(-1);
             destroy();
         }
+
+        //heading = Utils.directionToVector(direction, 1);
         setX(getX() + heading.getX());
         setY(getY() + heading.getY());
+        getMessage();
     }
 
     @Override
@@ -60,6 +64,14 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
     @Override
     public String getMessage() {
         return (getDamage() + " damage");
+    }
+
+
+
+    public static void rotateSimpleEnemyCircle() {
+        direction = direction + 1;
+        heading = Utils.directionToVector(direction, 1);
+
     }
 
 
